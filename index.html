@@ -4,18 +4,143 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="/style.css">
-  <script type="text/javascript" src="/main.js"></script>
   <title>Solid Authentication</title>
 </head>
 <body>
   <main>
+
     <h1>Solid Authentication</h1>
     <p>
       You are <mark>unauthenticated</mark>.
     </p>
     <p>
-      <button>Log In</button>
+      <button id="start-auth">
+        Log In
+      </button>
     </p>
+    <dialog>
+      <form>
+        <label for="webid">Enter your WebID</label>
+        <input
+          value="https://id.inrupt.com/nikolaswise"
+          placeholder="https://login.stucco.software/you"
+          type="text"
+          name="webid"
+          id="webid">
+        <button>Go</button>
+      </form>
+
+    </dialog>
+
+
+
+    <section>
+      <p>
+        This is a static client application following the OIDC authentication flow outlined in the <a href="https://solidproject.org/TR/oidc-primer">Soli OIDC Primer</a>.
+      </p>
+
+      <h2>
+        Step One
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-1">☞</a>
+      </h2>
+      <p>
+        This app is <code>solid-authentication.rdf.systems</code>. It contains the JavaScript that will help with the authentication process.
+      </p>
+
+      <h2>
+        Step Two
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-2">☞</a>
+      </h2>
+
+      <p>
+        I have a <em>WebID</em> over at Inrupt's dev portal: <code> https://id.inrupt.com/nikolaswise</code>.
+      </p>
+
+      <h2>
+        Step Two <em>point</em> 1
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-2.1">☞</a>
+      </h2>
+
+      <p>
+        Grab the WebID from the form submit, and fetch the url. Request JSON with the <code>accept: application/ld+json</code> header and grab the provider url out: <code>let provider = json["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]</code>.
+      </p>
+
+      <h2>
+        Step Three
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-3">☞</a>
+      </h2>
+
+      <p>
+        <code>fetch(`${provider}/.well-known/openid-configuration`)</code> To go ahead and grab the provider configuation object. This only comes back as JSON so no need to content negotiate. We want to grab the <code>authorization_endpoint</code> from the config.
+      </p>
+
+      <h2>
+        Step Four
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-4">☞</a>
+      </h2>
+
+      <p>One: Create a cryptographically random string with like, <code>crypto.randomUUID()</code></p>
+
+      <p>Two: Base 64 URL Encode the S256 hash of the that rando string. <a href="https://stackoverflow.com/questions/59911194/how-to-calculate-pckes-code-verifier">Aaron's answer here</a>is unsuprisingly good.</p>
+
+      <h2>
+        Step Five
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-5">☞</a>
+      </h2>
+      <p>Stuff the <em>challenge only</em> into sessio storage.</p>
+
+      <h2>
+        Step Six
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-6">☞</a>
+      </h2>
+      <p>
+        Make a reqeest to the <code>authorization_endpoint</code> with some extra query params at the end:
+        <dl>
+          <dt>
+            response_type
+          </dt>
+          <dd>
+            "code"
+          </dd>
+
+          <dt>
+            redirect_uri
+          </dt>
+          <dd>
+            some.callback.url.example/callback
+          </dd>
+
+          <dt>
+            scope
+          </dt>
+          <dd>
+            openid%20webid%20offline_access
+          </dd>
+
+          <dt>
+            client_id
+          </dt>
+          <dd>
+            http://solid-authentication.rdf.systems
+          </dd>
+
+          <dt>
+            code_challenge_method
+          </dt>
+          <dd>
+            S256
+          </dd>
+
+          <dt>
+            code_challenge
+          </dt>
+          <dd>
+            generated_challenge_here
+          </dd>
+        </dl>
+      </p>
+    </section>
   </main>
+  <script type="text/javascript" src="/main.js"></script>
 </body>
 </html>

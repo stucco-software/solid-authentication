@@ -78,6 +78,10 @@ textarea:not([rows]) {
 }
 
 main {
-  width: min-content;
+  min-width: min-content;
+  max-width: 32rem;
   margin: auto;
+}
+input {
+  display: block;
 }
