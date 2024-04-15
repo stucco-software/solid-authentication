@@ -121,7 +121,7 @@
             client_id
           </dt>
           <dd>
-            http://solid-authentication.rdf.systems
+            http://solid-authentication.rdf.systems/webid
           </dd>
 
           <dt>
@@ -138,6 +138,10 @@
             generated_challenge_here
           </dd>
         </dl>
+      </p>
+
+      <p>
+        Once the app makes that request, the Provider will make a call to `client_id` provided to make sure that it's a real thing. This means your app needs to expose a JSON blob like the one in the example. Ours is <a href="/webid.json"> a static blob</a>.
       </p>
     </section>
   </main>

@@ -2,7 +2,7 @@ const authRequest = async ({authorization_endpoint, code_challenge}) => {
   let response_type = 'code'
   let redirect_uri = 'http://localhost:8888/'
   let scope = 'openid webid 20offline_access'
-  let client_id = 'https://solid-authentication.rdf.systems/webid'
+  let client_id = 'https://solid-authentication.rdf.systems/webid.json'
   let code_challenge_method = 'S256'
   const query = new URLSearchParams({
     response_type,
