@@ -13,9 +13,13 @@ const authRequest = async ({authorization_endpoint, code_challenge}) => {
     code_challenge
   })
   const url = new URL(`${authorization_endpoint}?${query}`)
-  let r = await fetch(url)
-  let text = await r.text()
-  console.log(text)
+
+  window.location = url
+  // let r = await fetch(url, {
+  //    mode: "no-cors"
+  // })
+  // let text = await r.text()
+  // console.log(text)
 }
 
 // Code Challenge Shit

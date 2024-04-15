@@ -143,6 +143,12 @@
       <p>
         Once the app makes that request, the Provider will make a call to `client_id` provided to make sure that it's a real thing. This means your app needs to expose a JSON blob like the one in the example. Ours is <a href="/webid.json"> a static blob</a>.
       </p>
+      <p>
+        Note: the redirect URI in your request has to match <em>exactly</em> the one provided by the JSON blob. Trailing slashes matter!
+      </p>
+      <p>
+        Note: I got a CORS error now? Because we're not <code>fetch</code>ing this URL, we're redirecting to it! Set it to the <code>window.location</code>.
+      </p>
     </section>
   </main>
   <script type="text/javascript" src="/main.js"></script>
