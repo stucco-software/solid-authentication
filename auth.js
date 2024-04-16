@@ -63,7 +63,17 @@ const getProviderFromWebID = async (webID) => {
     }
   })
   let json = await r.json()
-  let provider = json["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
+  // yes this is gross I know
+  let provider
+  if (json["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
+    provider = json["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
+  }
+  if (json[0]["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
+    provider = json[0]["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
+  }
+  if (json[1]["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
+    provider = json[1]["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
+  }
   return provider
 }
 
