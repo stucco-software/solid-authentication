@@ -63,6 +63,7 @@ const getProviderFromWebID = async (webID) => {
     }
   })
   let json = await r.json()
+  console.log(json)
   // yes this is gross I know
   let provider
   if (json["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
@@ -79,6 +80,7 @@ const getProviderFromWebID = async (webID) => {
 
 export const authenticate = async (webID) => {
   const provider = await getProviderFromWebID(webID)
+  console.log(provider)
   const config = await getProviderConfiguration(provider)
   const authorization_endpoint = config.authorization_endpoint
   const {code_challenge, code_verifier} = await createCodeChallenge()
