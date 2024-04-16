@@ -149,8 +149,38 @@
       <p>
         Note: I got a CORS error now? Because we're not <code>fetch</code>ing this URL, we're redirecting to it! Set it to the <code>window.location</code>.
       </p>
+
+      <h2>
+        Step Seven — Eleven
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-7">☞</a>
+      </h2>
+      <p>
+        Hand-wavey server magic that's not our problem today.
+      </p>
+
+      <h2>
+        Step Twelve
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-12">☞</a>
+      </h2>
+      <p>
+        We're back at our application screen with a lot of neat shit in the query! We Generate A DPoP Token. Somehow. I'm gonna do what <a href="https://docs.verify.ibm.com/ibm-security-verify-access/docs/oauth2-dpop">IBM says to do</a>.
+      </p>
+
+      <h2>
+        Step Thirteen
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-13">☞</a>
+      </h2>
+      <p>
+        Now that we have a generated Key pair, both Public and Private I guess, we Generate the DPoP Header?? This was Very Hard but the friends at <a href="https://docs.use.id/docs/authenticate-using-dpop">Use.ID</a> helped.
+      </p>
+
+      <h2>
+        Step Fourteen
+        <a href="https://solidproject.org/TR/oidc-primer#authorization-code-pkce-flow-step-14">☞</a>
+      </h2>
+      <p>Once we have our fancy DPoP token we can get an <em>Access Token</em> and a <em>Refresh Token</em> hooray. We put those into Session Storage, clean out the qquery params in our URL, then call whatever side effects we want to happen if we're authenticated. In this case we update our dom and remove the login button! </p>
     </section>
   </main>
-  <script type="text/javascript" src="/main.js"></script>
+  <script type="module" type="text/javascript" src="/main.js"></script>
 </body>
 </html>
