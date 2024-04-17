@@ -100,6 +100,7 @@ export const createDPoP = async ({code, iss}) => {
       "client_id": "https://solid-authentication.rdf.systems/webid.json"
     })
   })
+  console.log(`fetch took ${new Date().getTime() - now}ms`)
   let data = await r.json()
   sessionStorage.removeItem('code_verifier')
   sessionStorage.setItem('access_token', data.access_token)
