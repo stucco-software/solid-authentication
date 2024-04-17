@@ -64,6 +64,7 @@ export const createDPoP = async ({code, iss}) => {
   const token_endpoint = sessionStorage.getItem('token_endpoint')
   const tokenID = crypto.randomUUID()
   const tokenCreated = new Date().getTime()
+  console.log(tokenCreated)
   const tokenHeader = {
     "alg": "ES256",
     "typ": "dpop+jwt",
@@ -83,6 +84,8 @@ export const createDPoP = async ({code, iss}) => {
   })
 
   let redirect = 'https://solid-authentication.rdf.systems/'
+  let now = new Date().getTime()
+  console.log(`signing took ${now - tokenCreated}ms`)
   let r = await fetch(tokenBody.htu, {
     method: tokenBody.htm,
     headers: {
