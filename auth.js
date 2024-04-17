@@ -103,6 +103,7 @@ const getProviderFromWebID = async (webID) => {
 export const authenticate = async (webID) => {
   const provider = await getProviderFromWebID(webID)
   const config = await getProviderConfiguration(provider)
+  console.log(config)
   const authorization_endpoint = config.authorization_endpoint
   const {code_challenge, code_verifier} = await createCodeChallenge()
   sessionStorage.setItem('code_verifier', code_verifier)
