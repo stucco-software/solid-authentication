@@ -55,6 +55,37 @@ const getProviderConfiguration = async (provider) => {
   return json
 }
 
+
+const getID = (r) => {
+  let v
+  let arr = arrayify(r)
+  arr.forEach(n => {
+    if (n['@id']) {
+      v = n['@id']
+    }
+  })
+  return v
+}
+
+const findPredicate = ({p, arr}) => {
+  let v = []
+  arr.forEach(n => {
+    if (n[p]) {
+      let r = n[p]
+      v.push(getID(r))
+    }
+  })
+  return v
+}
+
+const getOIDCProvider = (r) => {
+  let provider = findPredicate({
+    p: 'http://www.w3.org/ns/solid/terms#oidcIssuer',
+    arr: arrayify(r)
+  })
+  return provider[0]
+}
+
 // webID is a URL
 const getProviderFromWebID = async (webID) => {
   let r = await fetch(webID, {
@@ -63,24 +94,12 @@ const getProviderFromWebID = async (webID) => {
     }
   })
   let json = await r.json()
-  console.log(json)
-  // yes this is gross I know
-  let provider
-  if (json["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
-    provider = json["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
-  }
-  if (json[0]["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
-    provider = json[0]["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
-  }
-  if (json[1]["http://www.w3.org/ns/solid/terms#oidcIssuer"]) {
-    provider = json[1]["http://www.w3.org/ns/solid/terms#oidcIssuer"]["@id"]
-  }
+  let provider = getOIDCProvider(json)
   return provider
 }
 
 export const authenticate = async (webID) => {
   const provider = await getProviderFromWebID(webID)
-  console.log(provider)
   const config = await getProviderConfiguration(provider)
   const authorization_endpoint = config.authorization_endpoint
   const {code_challenge, code_verifier} = await createCodeChallenge()
