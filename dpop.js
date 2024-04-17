@@ -61,6 +61,7 @@ export const createDPoP = async ({code, iss}) => {
   const keyPair = await generateKey()
   const publicJWK = await crypto.subtle.exportKey('jwk', keyPair.publicKey)
 
+  const token_endpoint = sessionStorage.getItem('token_endpoint')
   const tokenID = crypto.randomUUID()
   const tokenCreated = new Date().getTime()
   const tokenHeader = {
@@ -70,7 +71,7 @@ export const createDPoP = async ({code, iss}) => {
   }
 
   const tokenBody = {
-    "htu": `${iss.endsWith('/') ? iss : iss + '/'}token`,
+    "htu": token_endpoint,
     "htm": "POST",
     "jti": tokenID,
     "iat": tokenCreated
