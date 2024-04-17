@@ -1,4 +1,6 @@
 import { createDPoP } from './dpop.js'
+// truly the greatest function when working with jsonld
+const arrayify = (i) => Array.isArray(i) ? i : [i]
 
 const authRequest = async ({authorization_endpoint, code_challenge}) => {
   let response_type = 'code'
