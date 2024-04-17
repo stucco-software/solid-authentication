@@ -63,7 +63,7 @@ export const createDPoP = async ({code, iss}) => {
 
   const token_endpoint = sessionStorage.getItem('token_endpoint')
   const tokenID = crypto.randomUUID()
-  const tokenCreated = new Date().getTime()
+  const tokenCreated = new Date().getTime() + 3000
   // const tokenCreated = Math.floor(Date.now() / 1000)
   const tokenHeader = {
     "alg": "ES256",
