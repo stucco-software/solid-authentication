@@ -70,7 +70,7 @@ export const createDPoP = async ({code, iss}) => {
   }
 
   const tokenBody = {
-    "htu": `${iss}/token`,
+    "htu": `${iss.endsWith('/') ? iss : iss + '/'}token`,
     "htm": "POST",
     "jti": tokenID,
     "iat": tokenCreated
