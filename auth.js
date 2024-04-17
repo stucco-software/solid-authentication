@@ -52,7 +52,7 @@ const getAuthorizationEndpointFromWebID = async (webid) => {
 
 // provider is a URL
 const getProviderConfiguration = async (provider) => {
-  let r = await fetch(`${provider}/.well-known/openid-configuration`)
+  let r = await fetch(`${provider.endsWith('/') ? provider : provider + '/'}.well-known/openid-configuration`)
   let json = await r.json()
   return json
 }
