@@ -4,8 +4,8 @@ const arrayify = (i) => Array.isArray(i) ? i : [i]
 
 const authRequest = async ({authorization_endpoint, code_challenge}) => {
   let response_type = 'code'
-  // let redirect_uri = 'https://solid-authentication.rdf.systems/'
-  let redirect_uri = 'http://localhost:8888/'
+  let redirect_uri = 'https://solid-authentication.rdf.systems/'
+  // let redirect_uri = 'http://localhost:8888/'
   let scope = 'openid webid offline_access'
   let client_id = 'https://solid-authentication.rdf.systems/webid.json'
   let code_challenge_method = 'S256'

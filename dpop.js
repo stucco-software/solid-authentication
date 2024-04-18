@@ -86,8 +86,8 @@ export const createDPoP = async ({code, iss}) => {
     privateKey: keyPair.privateKey
   })
 
-  // let redirect = 'https://solid-authentication.rdf.systems/'
-  let redirect = 'http://localhost:8888/'
+  let redirect = 'https://solid-authentication.rdf.systems/'
+  // let redirect = 'http://localhost:8888/'
   let r = await fetch(tokenBody.htu, {
     method: tokenBody.htm,
     headers: {
