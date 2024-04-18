@@ -1,4 +1,4 @@
-import { authenticate, callback } from './auth.js'
+import { authenticate, withProvider, callback } from './auth.js'
 
 const auth_form = document.querySelector("form")
 auth_form.addEventListener('submit', async (e) => {
@@ -6,6 +6,11 @@ auth_form.addEventListener('submit', async (e) => {
   const formData = new FormData(e.target)
   const webID = formData.get('webid')
   await authenticate(webID)
+})
+
+const stucco_auth = document.querySelector("#stucco")
+stucco_auth.addEventListener('click', async () => {
+  await withProvider('https://login.stucco.software/')
 })
 
 const dialog = document.querySelector("dialog")

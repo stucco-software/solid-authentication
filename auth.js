@@ -4,7 +4,8 @@ const arrayify = (i) => Array.isArray(i) ? i : [i]
 
 const authRequest = async ({authorization_endpoint, code_challenge}) => {
   let response_type = 'code'
-  let redirect_uri = 'https://solid-authentication.rdf.systems/'
+  // let redirect_uri = 'https://solid-authentication.rdf.systems/'
+  let redirect_uri = 'http://localhost:8888/'
   let scope = 'openid webid offline_access'
   let client_id = 'https://solid-authentication.rdf.systems/webid.json'
   let code_challenge_method = 'S256'
@@ -37,7 +38,7 @@ const getChallengeFromVerifier = async (verifier) => {
 }
 
 const createCodeChallenge = async () => {
-  const code_verifier = crypto.randomUUID()
+  const code_verifier = `${crypto.randomUUID()}.${crypto.randomUUID()}`
   const code_challenge = await getChallengeFromVerifier(code_verifier)
   return {
     code_challenge,
@@ -100,8 +101,7 @@ const getProviderFromWebID = async (webID) => {
   return provider
 }
 
-export const authenticate = async (webID) => {
-  const provider = await getProviderFromWebID(webID)
+export const withProvider = async (provider) => {
   const config = await getProviderConfiguration(provider)
   const authorization_endpoint = config.authorization_endpoint
   const token_endpoint = config.token_endpoint
@@ -112,6 +112,11 @@ export const authenticate = async (webID) => {
     authorization_endpoint,
     code_challenge
   })
+}
+
+export const authenticate = async (webID) => {
+  const provider = await getProviderFromWebID(webID)
+  await withProvider(provider)
 }
 
 export const callback = async (cb) => {

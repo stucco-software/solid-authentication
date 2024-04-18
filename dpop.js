@@ -57,6 +57,9 @@ const generateKey = async () => {
   return keyPair
 }
 
+
+export const getEpochTime = (date) => Math.floor(date.getTime() / 1000)
+
 export const createDPoP = async ({code, iss}) => {
   const keyPair = await generateKey()
   const publicJWK = await crypto.subtle.exportKey('jwk', keyPair.publicKey)
@@ -64,7 +67,7 @@ export const createDPoP = async ({code, iss}) => {
   const token_endpoint = sessionStorage.getItem('token_endpoint')
   const tokenID = crypto.randomUUID()
   // const tokenCreated = new Date().getTime() + 30000
-  const tokenCreated = Date.now() + 3000
+  const tokenCreated = getEpochTime(new Date())
   const tokenHeader = {
     "alg": "ES256",
     "typ": "dpop+jwt",
@@ -83,7 +86,8 @@ export const createDPoP = async ({code, iss}) => {
     privateKey: keyPair.privateKey
   })
 
-  let redirect = 'https://solid-authentication.rdf.systems/'
+  // let redirect = 'https://solid-authentication.rdf.systems/'
+  let redirect = 'http://localhost:8888/'
   let r = await fetch(tokenBody.htu, {
     method: tokenBody.htm,
     headers: {
@@ -98,7 +102,9 @@ export const createDPoP = async ({code, iss}) => {
       "client_id": "https://solid-authentication.rdf.systems/webid.json"
     })
   })
+  console.log('wat?')
   let data = await r.json()
+  console.log(data)
   sessionStorage.removeItem('code_verifier')
   sessionStorage.setItem('access_token', data.access_token)
   sessionStorage.setItem('refresh_token', data.refresh_token)
