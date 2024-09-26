@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Departure';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/DepartureMono.woff2') format('woff2');
+}
+
 /* https://piccalil.li/blog/a-more-modern-css-reset */
 /* Box sizing rules */
 *,
@@ -77,13 +84,65 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
+:root {
+  --bg: #d8fee7;
+  --txt: #130fe9;
+}
+
+html {
+  font-size: 22px;
+  font-family: "Departure";
+  color: var(--txt);
+  background-color: var(--bg);
+}
+
+body {
+  font-size: 1rem;
+}
+
 main {
-  min-width: min-content;
   max-width: 32rem;
   margin: auto;
 }
 input {
   display: block;
+}
+
+pre {
+  background-color: var(--txt);
+  color: var(--bg);
+  border: 1px solid var(--txt);
+  padding-inline: 2ch;
+  max-width: 100%;
+  overflow: scroll;
+}
+code {
+  background-color: var(--txt);
+  color: var(--bg);
+  padding: 0.25ch 1ch;
+  border-radius: 5px;
+}
+mark {
+  color: var(--txt);
+  background-color: var(--bg);
+}
+h2 {
+  font-size: 1.5rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
+p:has(mark) {
+  border: 1px solid var(--txt);
+  padding: 0.25ch 1ch;
+}
+pre code {
+  padding: 0;
+}
+blockquote {
+  border-inline-start: 11px dashed var(--txt);
+  margin-inline: 0;
+  padding-inline-start: 2ch;
 }
 footer {
   text-align: center;
